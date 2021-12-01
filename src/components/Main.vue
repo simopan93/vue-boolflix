@@ -1,6 +1,7 @@
 <template>
   <main>
-    <SingleCard />
+    <SingleCard 
+    :movieSearched = "movieSearched"/>
 
   </main>
 </template>
@@ -17,6 +18,10 @@ import SingleCard from "./SingleCard.vue";
 export default {
   name: "Main",
 
+  props: {
+    movieSearched: Array
+  },
+
   components: {
     SingleCard,
   }
@@ -27,8 +32,9 @@ export default {
 
 
 
-<style>
+<style lang="scss">
   main{
+    overflow: auto;
     height: calc(100vh - 80px);
     background-color: grey;
   }
