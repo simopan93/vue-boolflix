@@ -1,7 +1,9 @@
 <template>
   <div>
     <Header @nameSearch = "userSearch" />
-    <Main :movieSearched = "movieSearched"/>
+    <Main 
+    :movieSearched = "movieSearched"
+    :seriesSearched = "seriesSearched"/>
   </div>
 </template>
 
@@ -22,20 +24,55 @@ export default {
 
   data(){
     return{
-      api_url: "https://api.themoviedb.org/3/search/movie?",
-      api_key: "3f7c87f58d989212050b3b07d574df2e",
+      apiUrlMovie: "https://api.themoviedb.org/3/search/movie",
+      apiParamsMovie :{
+        api_key: "3f7c87f58d989212050b3b07d574df2e",
+        language: "it-IT",
+        query: "",
+      },
+
+      apiUrlSeries: "https://api.themoviedb.org/3/search/tv",
+      apiParamsSeries :{
+        api_key: "3f7c87f58d989212050b3b07d574df2e",
+        language: "it-IT",
+        query: "",
+      },
+      
       movieSearched: [],
+      seriesSearched: []
     }
   },
 
   methods:{
     userSearch(name){
+     this.fillArrayMovie(name);
+     this.fillArraySeries(name);
+    },
+
+
+    fillArrayMovie(name){
+      this.apiParamsMovie.query = name;
       
-      axios.get(`${this.api_url}api_key=${this.api_key}&query=${name}&language=it`)
+      axios.get(this.apiUrlMovie, {params: this.apiParamsMovie})
       .then ( r => {
         console.log("Api chiamato dentro App" ,name ,r.data.results);
         this.movieSearched = r.data.results;
         console.log("Log di MovieSearched" ,name ,this.movieSearched);
+
+      }).catch( error => {
+            console.log(error);
+        });
+    },
+
+
+    fillArraySeries(name){
+      this.apiParamsSeries.query = name;
+      
+      axios.get(this.apiUrlSeries, {params: this.apiParamsMovie})
+      .then ( r => {
+        console.log("Api chiamato dentro App" ,name ,r.data.results);
+        this.seriesSearched = r.data.results;
+        console.log("Log di seriesSearched" ,name ,this.seriesSearched);
 
       }).catch( error => {
             console.log(error);

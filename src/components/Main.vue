@@ -1,7 +1,9 @@
 <template>
   <main>
     <SingleCard 
-    :movieSearched = "movieSearched"/>
+    :movieSearched = "movieSearched"
+    :seriesSearched = "seriesSearched"
+    />
 
   </main>
 </template>
@@ -19,7 +21,8 @@ export default {
   name: "Main",
 
   props: {
-    movieSearched: Array
+    movieSearched: Array,
+    seriesSearched: Array
   },
 
   components: {

@@ -1,25 +1,57 @@
 <template>
-  <section class="SingleCard container d-flex justify-content-center align-content-center flex-wrap py-5">
+  <section class="SingleCard sp-container d-flex justify-content-center align-content-center flex-wrap py-5">
 
-    <ul
-    v-for="(el, index) in movieSearched"
-    :key='index'
-    class="d-inline-block m-3">
-      <li>{{el.title}}</li>
-      <li>{{el.original_title}}</li>
+    <div class="row justify-content-center w-100">
+      <h2 class="d-block text-center">FILM</h2>
 
-      <li v-if="el.original_language === 'it'">
-        <img :src="flagLanguageIT" :alt="el.original_language">
-      </li>
-      
-      <li v-else-if="el.original_language === 'en'">
-        <img :src="flagLanguageEN" :alt="el.original_language">
-      </li>
 
-      <li v-else>{{el.original_language}}</li>
-      <li>{{el.vote_average}}</li>
-    </ul>
+      <ul
+      v-for="(el) in movieSearched"
+      :key='el.id'
+      class="d-inline-block m-3">
+        <li>{{el.title}}</li>
+        <li>{{el.original_title}}</li>
 
+        <li v-if="el.original_language === 'it'">
+          <img :src="flagLanguageIT" :alt="el.original_language">
+        </li>
+
+        <li v-else-if="el.original_language === 'en'">
+          <img :src="flagLanguageEN" :alt="el.original_language">
+        </li>
+
+        <li v-else>{{el.original_language}}</li>
+        <li>{{el.vote_average}}</li>
+      </ul>
+    </div>
+    
+
+
+
+    <div class="row justify-content-center w-100">
+
+      <h2 class="d-block text-center">SERIE TV</h2>
+
+      <ul
+      v-for="(el) in seriesSearched"
+      :key='el.id'
+      class="d-inline-block m-3">
+        <li>{{el.name}}</li>
+        <li>{{el.original_name}}</li>
+
+        <li v-if="el.original_language === 'it'">
+          <img :src="flagLanguageIT" :alt="el.original_language">
+        </li>
+
+        <li v-else-if="el.original_language === 'en'">
+          <img :src="flagLanguageEN" :alt="el.original_language">
+        </li>
+
+        <li v-else>{{el.original_language}}</li>
+        <li>{{el.vote_average}}</li>
+      </ul>
+
+    </div>
 
   </section>
 </template>
@@ -31,7 +63,8 @@ export default {
   name: "SingleCard",
 
   props: {
-    movieSearched: Array
+    movieSearched: Array,
+    seriesSearched: Array
   },
 
   data(){
