@@ -7,7 +7,16 @@
     class="d-inline-block m-3">
       <li>{{el.title}}</li>
       <li>{{el.original_title}}</li>
-      <li>{{el.original_language}}</li>
+
+      <li v-if="el.original_language === 'it'">
+        <img :src="flagLanguageIT" :alt="el.original_language">
+      </li>
+      
+      <li v-else-if="el.original_language === 'en'">
+        <img :src="flagLanguageEN" :alt="el.original_language">
+      </li>
+
+      <li v-else>{{el.original_language}}</li>
       <li>{{el.vote_average}}</li>
     </ul>
 
@@ -24,6 +33,14 @@ export default {
   props: {
     movieSearched: Array
   },
+
+  data(){
+    return{
+      flagLanguageIT: require('../assets/img/it.png'),
+      flagLanguageEN: require('../assets/img/en.png'),
+    }
+  },
+
 }
 </script>
 
@@ -40,6 +57,14 @@ export default {
       list-style: none;
       padding: 10px;
       border: 1px solid black;
+
+      li {
+
+        img{
+          height: 15px;
+          width: 15px;
+        }
+      }
     }
   }
 
