@@ -21,7 +21,7 @@
             :alt="`${el.title}`">
 
             <div v-else class="poster">
-              <p>{{el.title}}</p>
+              <span>{{el.title}}</span>
             </div>
           </div>
 
@@ -30,39 +30,56 @@
           :style="setBgImage(`https://image.tmdb.org/t/p/w500/${el.poster_path}`)">
 
             <div class="overlay">
-              <li>{{el.title}}</li>
-              <li>{{el.original_title}}</li>
+              <li class="box-title">
+                <h6>Title:</h6>
+                <span>{{el.title}}</span>
+              </li>
+
+              <li class="h-10 box-original-title">
+                <h6>Original Title:</h6>
+                <span>{{el.original_title}}</span>
+              </li>
 
               <!-- Lingua  -->
-              <li v-if="el.original_language === 'it'">
+              <li v-if="el.original_language === 'it'"
+                  class="box-language">
+                <h6>Language:</h6>
                 <img class="flag" :src="flagLanguageIT" :alt="el.original_language">
               </li>
 
-              <li v-else-if="el.original_language === 'en'">
+              <li v-else-if="el.original_language === 'en'"
+                  class="box-language">
+                <h6>Language:</h6>
                 <img class="flag" :src="flagLanguageEN" :alt="el.original_language">
               </li>
 
-              <li v-else>{{el.original_language}}</li>
+              <li v-else
+                class="box-language">
+                <h6>Language:</h6>
+                <span>{{el.original_language}}</span>
+              </li>
 
               <!-- Descrizione  -->
-              <li class="description">{{el.overview}}</li>
+              <li class="description">
+                <h6>Description:</h6>
+                <span>{{el.overview}}</span>
+              </li>
 
               <!-- Valutazione con stars  -->
-              <li>
-                  <i v-for="(star,index) in 5"
+              <li class="section-stars">
+                  <h6>Vote:</h6>
+                  <div class="box-stars">
+                    <i v-for="(star,index) in 5"
                     :key="index"
                     class="d-inline-block fa-star"
                     :class="index < Math.round(el.vote_average / 2) ? 'fas' : 'far'">
-                  </i>
+                    </i>
+                  </div>
               </li>
+
             </div>
-           
-
           </div>
-          
         </div>
-
-        
       </div>
     </div>
     
@@ -74,7 +91,7 @@
       <h2 class="d-block text-center">SERIE TV</h2>
 
 
-    <!--Ciclo Film -->
+    <!--Ciclo Series -->
       <div
       v-for="(el) in seriesSearched"
       :key='el.id'
@@ -89,51 +106,73 @@
           :alt="`${el.name}`">
 
           <div v-else class="poster">
-              <p>{{el.name}}</p>
+              <span>{{el.name}}</span>
           </div>
         </div>
 
     <!-- Parte Inferiore della Card  -->
-        <div class="flip-card-back">
-          <li>{{el.name}}</li>
-          <li>{{el.original_name}}</li>
+        <div class="flip-card-back"
+        :style="setBgImage(`https://image.tmdb.org/t/p/w500/${el.poster_path}`)">
+
+        <div class="overlay">
+
+          <li class="box-title">
+            <h6>Title:</h6>
+            <span>{{el.name}}</span>
+          </li>
+
+          <li class="h-10 box-original-title">
+            <h6>Original Title:</h6>
+            <span>{{el.original_name}}</span>
+          </li>
 
 
         <!-- Lingua  -->
-          <li v-if="el.original_language === 'it'">
+         <li v-if="el.original_language === 'it'"
+            class="box-language">
+            <h6>Language:</h6>
             <img class="flag" :src="flagLanguageIT" :alt="el.original_language">
           </li>
 
-          <li v-else-if="el.original_language === 'en'">
-            <img class="flag" :src="flagLanguageEN" :alt="el.original_language">
-          </li>
+          <li v-else-if="el.original_language === 'en'"
+              class="box-language">
+              <h6>Language:</h6>
+              <img class="flag" :src="flagLanguageEN" :alt="el.original_language">
+            </li>
 
-          <li v-else>{{el.original_language}}</li>
-
+            <li v-else
+              class="box-language">
+              <h6>Language:</h6>
+              <span>{{el.original_language}}</span>
+            </li>
 
         <!-- Descrizione  -->
-          <li class="description">{{el.overview}}</li>
+          <li class="description">
+            <h6>Description:</h6>
+            <span>{{el.overview}}</span>
+          </li>
 
 
         <!-- Valutazione con stars  -->
-          <li>
-            <i v-for="(star,index) in 5"
+          <li class="section-stars">
+            <h6>Vote:</h6>
+            <div class="box-stars">
+              <i v-for="(star,index) in 5"
               :key="index"
               class="d-inline-block fa-star"
               :class="index < Math.round(el.vote_average / 2) ? 'fas' : 'far'">
-            </i>
+              </i>
+            </div>
           </li>
+
+        </div>
+
+         
           
         </div>
-        
-
       </div>
-
-        
       </div>
-
     </div>
-
   </section>
 </template>
 
@@ -224,6 +263,22 @@ export default {
 
           li {
 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            h6{
+              text-align: center;
+              font-weight: 700;
+              color: black;
+              margin: 0 !important;
+            }
+
+            span{
+              font-size: 11px;
+              margin: 0 !important;
+            }
+
             img.flag{
               height: 15px;
               width: 15px;
@@ -232,12 +287,31 @@ export default {
             .fas.fa-star{
               color: yellow;
             }
+          
           }
+            
 
-          li.description {
-            overflow-y: auto;
-            height: 54% ;
-          }
+            li.box-title{
+              height: 15%;
+            }
+
+            li.box-original-title{
+              height: 15%;
+            }
+
+            li.box-language{
+              height: 15%;
+            }
+
+            li.description {
+              overflow-y: auto;
+              height: 40% ;
+            }
+
+            li.section-stars {
+              height: 15%;
+            }
+          
         }
       } 
     }

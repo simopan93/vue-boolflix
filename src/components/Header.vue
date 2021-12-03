@@ -1,6 +1,6 @@
 <template>
   <header class="d-flex align-items-center justify-content-between px-4">
-    <h1>LOGO BOOLSTRAP</h1>
+    <h1>LOGO BOOLFLIX</h1>
 
   <div class="box-input">
     <input type="text"
