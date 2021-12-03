@@ -34,7 +34,15 @@
             </li>
 
             <li v-else>{{el.original_language}}</li>
-            <li>{{el.vote_average}}</li>
+
+            <li>
+                <i v-for="(star,index) in 5"
+                  :key="index"
+                  class="d-inline-block fa-star"
+                  :class="index < Math.round(el.vote_average / 2) ? 'fas' : 'far'">
+                </i>
+            </li>
+
           </div>
           
         </div>
@@ -78,7 +86,14 @@
           </li>
 
           <li v-else>{{el.original_language}}</li>
-          <li>{{el.vote_average}}</li>
+          <li>
+            <i v-for="(star,index) in 5"
+              :key="index"
+              class="d-inline-block fa-star"
+              :class="index < Math.round(el.vote_average / 2) ? 'fas' : 'far'">
+            </i>
+          </li>
+          
         </div>
         
 
@@ -118,6 +133,7 @@ export default {
 <style lang="scss">
 
 @import "../assets/style/general.scss";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
 
   section.SingleCard {
     
@@ -161,6 +177,10 @@ export default {
             img.flag{
               height: 15px;
               width: 15px;
+            }
+
+            .fas.fa-star{
+              color: yellow;
             }
           }
         }
