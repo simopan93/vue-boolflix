@@ -6,7 +6,7 @@
     <div class="row justify-content-center w-100">
       <h2 class="d-block text-center">FILM</h2>
 
-
+      <!--Ciclo Film -->
       <div
       v-for="(el) in movieSearched"
       :key='el.id'
@@ -14,34 +14,49 @@
 
         <div class="flip-card-inner">
 
+          <!-- Inserimento Poster  -->
           <div class="flip-card-front">
-            <img class="poster" 
+            <img v-if="el.poster_path" class="poster" 
             :src="`https://image.tmdb.org/t/p/w500/${el.poster_path}`" 
             :alt="`${el.title}`">
+
+            <div v-else class="poster">
+              <p>{{el.title}}</p>
+            </div>
           </div>
 
+          <!-- Parte Inferiore della Card  -->
+          <div class="flip-card-back"
+          :style="setBgImage(`https://image.tmdb.org/t/p/w500/${el.poster_path}`)">
 
-          <div class="flip-card-back">
-            <li>{{el.title}}</li>
-            <li>{{el.original_title}}</li>
+            <div class="overlay">
+              <li>{{el.title}}</li>
+              <li>{{el.original_title}}</li>
 
-            <li v-if="el.original_language === 'it'">
-              <img class="flag" :src="flagLanguageIT" :alt="el.original_language">
-            </li>
+              <!-- Lingua  -->
+              <li v-if="el.original_language === 'it'">
+                <img class="flag" :src="flagLanguageIT" :alt="el.original_language">
+              </li>
 
-            <li v-else-if="el.original_language === 'en'">
-              <img class="flag" :src="flagLanguageEN" :alt="el.original_language">
-            </li>
+              <li v-else-if="el.original_language === 'en'">
+                <img class="flag" :src="flagLanguageEN" :alt="el.original_language">
+              </li>
 
-            <li v-else>{{el.original_language}}</li>
+              <li v-else>{{el.original_language}}</li>
 
-            <li>
-                <i v-for="(star,index) in 5"
-                  :key="index"
-                  class="d-inline-block fa-star"
-                  :class="index < Math.round(el.vote_average / 2) ? 'fas' : 'far'">
-                </i>
-            </li>
+              <!-- Descrizione  -->
+              <li class="description">{{el.overview}}</li>
+
+              <!-- Valutazione con stars  -->
+              <li>
+                  <i v-for="(star,index) in 5"
+                    :key="index"
+                    class="d-inline-block fa-star"
+                    :class="index < Math.round(el.vote_average / 2) ? 'fas' : 'far'">
+                  </i>
+              </li>
+            </div>
+           
 
           </div>
           
@@ -54,11 +69,12 @@
 
 
     <!-- BLOCCO TV SERIES  -->
-
     <div class="row justify-content-center w-100">
 
       <h2 class="d-block text-center">SERIE TV</h2>
 
+
+    <!--Ciclo Film -->
       <div
       v-for="(el) in seriesSearched"
       :key='el.id'
@@ -66,17 +82,24 @@
 
       <div class="flip-card-inner">
 
+        <!-- Inserimento Poster  -->
         <div class="flip-card-front">
-          <img class="poster" 
+          <img v-if="el.poster_path" class="poster" 
           :src="`https://image.tmdb.org/t/p/w500/${el.poster_path}`" 
-          :alt="`${el.title}`"> 
+          :alt="`${el.name}`">
+
+          <div v-else class="poster">
+              <p>{{el.name}}</p>
+          </div>
         </div>
 
-
+    <!-- Parte Inferiore della Card  -->
         <div class="flip-card-back">
           <li>{{el.name}}</li>
           <li>{{el.original_name}}</li>
 
+
+        <!-- Lingua  -->
           <li v-if="el.original_language === 'it'">
             <img class="flag" :src="flagLanguageIT" :alt="el.original_language">
           </li>
@@ -86,6 +109,13 @@
           </li>
 
           <li v-else>{{el.original_language}}</li>
+
+
+        <!-- Descrizione  -->
+          <li class="description">{{el.overview}}</li>
+
+
+        <!-- Valutazione con stars  -->
           <li>
             <i v-for="(star,index) in 5"
               :key="index"
@@ -124,6 +154,16 @@ export default {
       flagLanguageEN: require('../assets/img/en.png'),
     }
   },
+
+  methods: {
+
+    setBgImage(urlImage){
+      return {
+        backgroundImage: `url(${urlImage})`,
+        background: `linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5))`
+      }
+    }
+  }
 
 }
 </script>
@@ -164,12 +204,22 @@ export default {
           }
         }
 
+        
+
 
         .flip-card-back{
-          background-color: dodgerblue;
+          background-size: contain;
           color: white;
           list-style: none;
           transform: rotateY(180deg);
+
+
+
+          .overlay {
+            height: 100%;
+            background-color: rgba(0, 0, 0, .5)
+          } 
+
 
 
           li {
@@ -182,6 +232,11 @@ export default {
             .fas.fa-star{
               color: yellow;
             }
+          }
+
+          li.description {
+            overflow-y: auto;
+            height: 54% ;
           }
         }
       } 
